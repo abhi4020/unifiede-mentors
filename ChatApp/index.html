@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Application</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="themeToggle">
+      <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="container">
+      <!-- Login Screen -->
+      <div class="login-container" id="loginScreen">
+        <h1>UnifiedChat</h1>
+        <p>
+          Advanced real-time chat with voice messages, polls, themes and more!
+        </p>
+        <form class="login-form" id="loginForm">
+          <div class="form-group">
+            <label for="username">Choose a username</label>
+            <input
+              type="text"
+              id="username"
+              class="form-control"
+              placeholder="Enter your username"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Join Chat</button>
+        </form>
+      </div>
+
+      <!-- Chat Application -->
+      <div class="chat-app" id="chatApp">
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <div class="sidebar-header">
+            <div class="user-info">
+              <div class="user-avatar" id="userAvatar">U</div>
+              <div class="user-name" id="userName">User</div>
+            </div>
+            <button class="logout-btn" id="logoutBtn">
+              <i class="fas fa-sign-out-alt"></i>
+            </button>
+          </div>
+
+          <div class="rooms-section">
+            <div class="section-title">
+              <span>Chat Rooms</span>
+              <button class="create-room-btn" id="createRoomBtn">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+            <ul class="rooms-list" id="roomsList">
+              <li class="room-item active" data-room="general">
+                <i class="fas fa-hashtag room-icon"></i>
+                <span>General</span>
+              </li>
+              <li class="room-item" data-room="technology">
+                <i class="fas fa-laptop-code room-icon"></i>
+                <span>Technology</span>
+              </li>
+              <li class="room-item" data-room="gaming">
+                <i class="fas fa-gamepad room-icon"></i>
+                <span>Gaming</span>
+              </li>
+              <li class="room-item" data-room="movies">
+                <i class="fas fa-film room-icon"></i>
+                <span>Movies & TV</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="users-online">
+            <h3>Online Users</h3>
+            <ul class="users-list" id="usersList">
+              <!-- Users will be populated by JavaScript -->
+            </ul>
+          </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="chat-area">
+          <div class="chat-header">
+            <div class="current-room" id="currentRoom">General</div>
+            <div class="room-actions">
+              <button id="searchToggleBtn">
+                <i class="fas fa-search"></i>
+              </button>
+              <button id="voiceMessageBtn">
+                <i class="fas fa-microphone"></i>
+              </button>
+              <button id="createPollBtn">
+                <i class="fas fa-poll"></i>
+              </button>
+              <button id="fileUploadBtn">
+                <i class="fas fa-paperclip"></i>
+              </button>
+              <button id="roomInfoBtn">
+                <i class="fas fa-info-circle"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Search Bar -->
+          <div class="search-container" id="searchContainer">
+            <input
+              type="text"
+              class="search-input"
+              id="searchInput"
+              placeholder="Search messages..."
+            />
+          </div>
+
+          <div class="messages-container" id="messagesContainer">
+            <div class="message other">
+              <div class="message-sender">System</div>
+              <div class="message-text">
+                Welcome to the General chat room! Try out our new features like
+                voice messages, polls, and dark mode!
+              </div>
+              <div class="message-time">Just now</div>
+            </div>
+          </div>
+
+          <div class="typing-indicator" id="typingIndicator">
+            <span id="typingUsers"></span>
+            <span class="typing-dots"
+              ><span>.</span><span>.</span><span>.</span></span
+            >
+          </div>
+
+          <div class="file-preview" id="filePreview"></div>
+
+          <div class="formatting-toolbar">
+            <button class="format-btn" data-format="bold">
+              <i class="fas fa-bold"></i>
+            </button>
+            <button class="format-btn" data-format="italic">
+              <i class="fas fa-italic"></i>
+            </button>
+            <button class="format-btn" data-format="link">
+              <i class="fas fa-link"></i>
+            </button>
+            <button class="format-btn" id="emojiPickerBtn">
+              <i class="fas fa-smile"></i>
+            </button>
+          </div>
+
+          <form class="message-form" id="messageForm">
+            <textarea
+              class="message-input"
+              id="messageInput"
+              placeholder="Type your message here..."
+              required
+            ></textarea>
+            <button type="submit" class="send-btn">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Create Room Modal -->
+    <div class="modal" id="createRoomModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Create New Room</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="roomName">Room Name</label>
+            <input
+              type="text"
+              id="roomName"
+              class="form-control"
+              placeholder="Enter room name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="roomDescription">Description (optional)</label>
+            <textarea
+              id="roomDescription"
+              class="form-control"
+              placeholder="Enter room description"
+            ></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="cancelCreateRoom">
+            Cancel
+          </button>
+          <button class="btn btn-primary" id="confirmCreateRoom">
+            Create Room
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Room Info Modal -->
+    <div class="modal" id="roomInfoModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="roomInfoTitle">Room Information</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Room:</strong> <span id="infoRoomName">General</span></p>
+          <p>
+            <strong>Created:</strong> <span id="infoRoomCreated">Today</span>
+          </p>
+          <p>
+            <strong>Users Online:</strong> <span id="infoRoomUsers">5</span>
+          </p>
+          <p>
+            <strong>Description:</strong>
+            <span id="infoRoomDescription"
+              >General discussion room for all topics.</span
+            >
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" id="closeRoomInfo">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Create Poll Modal -->
+    <div class="modal" id="createPollModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Create Poll</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="pollQuestion">Poll Question</label>
+            <input
+              type="text"
+              id="pollQuestion"
+              class="form-control"
+              placeholder="Enter your question"
+            />
+          </div>
+          <div class="form-group">
+            <label>Options</label>
+            <div id="pollOptions">
+              <input
+                type="text"
+                class="form-control poll-option-input"
+                placeholder="Option 1"
+              />
+              <input
+                type="text"
+                class="form-control poll-option-input"
+                placeholder="Option 2"
+              />
+            </div>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="addPollOption"
+              style="margin-top: 10px"
+            >
+              <i class="fas fa-plus"></i> Add Option
+            </button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="cancelCreatePoll">
+            Cancel
+          </button>
+          <button class="btn btn-primary" id="confirmCreatePoll">
+            Create Poll
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reaction Picker -->
+    <div class="reaction-picker" id="reactionPicker">
+      <div class="reaction-option" data-reaction="👍">👍</div>
+      <div class="reaction-option" data-reaction="❤️">❤️</div>
+      <div class="reaction-option" data-reaction="😂">😂</div>
+      <div class="reaction-option" data-reaction="😮">😮</div>
+      <div class="reaction-option" data-reaction="😢">😢</div>
+      <div class="reaction-option" data-reaction="😡">😡</div>
+      <div class="reaction-option" data-reaction="👏">👏</div>
+      <div class="reaction-option" data-reaction="🔥">🔥</div>
+    </div>
+
+    <!-- Connection Status -->
+    <div class="connection-status" id="connectionStatus">
+      <div class="connection-dot connected"></div>
+      <span>Connected</span>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

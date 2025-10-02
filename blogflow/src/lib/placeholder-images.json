@@ -1,0 +1,35 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "hero-home",
+      "description": "A calm and inviting desk setup with a laptop and a cup of coffee.",
+      "imageUrl": "https://picsum.photos/seed/1/1200/800",
+      "imageHint": "desk coffee"
+    },
+    {
+      "id": "js-depths",
+      "description": "Abstract visualization of Javascript code.",
+      "imageUrl": "https://picsum.photos/seed/2/600/400",
+      "imageHint": "code abstract"
+    },
+    {
+      "id": "ts-mastery",
+      "description": "A diagram showing Typescript type relationships.",
+      "imageUrl": "https://picsum.photos/seed/3/600/400",
+      "imageHint": "diagram chart"
+    },
+    {
+      "id": "ai-future",
+      "description": "Futuristic illustration of an AI brain.",
+      "imageUrl": "https://picsum.photos/seed/4/600/400",
+      "imageHint": "AI brain"
+    },
+    {
+      "id": "web-security",
+      "description": "A digital shield protecting a web application.",
+      "imageUrl": "https://picsum.photos/seed/5/600/400",
+      "imageHint": "security shield"
+    }
+  ]
+}

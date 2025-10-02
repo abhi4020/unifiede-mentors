@@ -1,0 +1,4 @@
+- [x] Edit src/app/actions.ts to add await before cookies().set and cookies().delete
+- [x] Edit src/app/blog/[slug]/page.tsx to make component async and add await before cookies()
+- [x] Edit src/components/layout/header.tsx to make component async and add await before cookies()
+- [x] Run npm run typecheck to verify no errors
