@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1764426419550,
+    "name": "ABHAY SALUNKHE",
+    "email": "abhaysalunkhe285@gmail.com",
+    "phone": "9960584873",
+    "password": {
+      "salt": "52eac53d215289d92b4724ac1c4318bb",
+      "hash": "78593b32cd5a006be6a6bdaa44ba789a5cf1ca9c2dc0f05392043ed09c98c82af6e72746974801f943cd1775b8c7f7ad0194f28517f5442c7dfaf7b757985d73"
+    },
+    "registeredDate": "2025-11-29T14:26:59.550Z",
+    "status": "active"
+  }
+]

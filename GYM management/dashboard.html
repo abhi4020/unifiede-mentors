@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Dashboard - FitZone</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-user">
+                    <div class="user-avatar">J</div>
+                    <div class="user-info">
+                        <h4 id="sidebarName">John Doe</h4>
+                        <p id="sidebarPlan">Premium Plan</p>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li><a href="#overview" class="sidebar-link active" onclick="switchTab('overview')"><i class="fas fa-chart-line"></i> Overview</a></li>
+                <li><a href="#bookings" class="sidebar-link" onclick="switchTab('bookings')"><i class="fas fa-calendar-check"></i> Bookings</a></li>
+                <li><a href="#progress" class="sidebar-link" onclick="switchTab('progress')"><i class="fas fa-chart-bar"></i> Progress</a></li>
+                <li><a href="#profile" class="sidebar-link" onclick="switchTab('profile')"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="#settings" class="sidebar-link" onclick="switchTab('settings')"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+
+            <div class="logout-btn">
+                <button id="logoutBtn" class="submit-btn" style="width:100%;display:flex;align-items:center;gap:10px;justify-content:center;"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                <a href="index.html" style="display:block;margin-top:12px;color:rgba(255,255,255,0.85);text-decoration:none;">Back to Home</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <div class="dashboard-header">
+                <h1>My Dashboard</h1>
+                <div style="text-align: right;">
+                    <p id="greetingDate" style="color: var(--text-secondary);"></p>
+                </div>
+            </div>
+
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>Membership Status</h4>
+                        <p class="stat-value">Active</p>
+                        <p class="stat-change">Renews in 25 days</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Sessions This Month</h4>
+                        <p class="stat-value" id="sessionsCount">12</p>
+                        <p class="stat-change">↑ 3 from last month</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Trainer Bookings</h4>
+                        <p class="stat-value" id="bookingsCount">4</p>
+                        <p class="stat-change">2 completed</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>BMI</h4>
+                        <p class="stat-value">23.5</p>
+                        <p class="stat-change">↓ 0.5 this month</p>
+                    </div>
+                </div>
+
+                <h2 style="margin-top: 40px; color: var(--secondary-color);">Recent Activity</h2>
+                <div class="bookings-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Activity</th>
+                                <th>Trainer/Class</th>
+                                <th>Duration</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentActivityTable">
+                            <tr>
+                                <td>Today</td>
+                                <td>Personal Training</td>
+                                <td>David Martinez</td>
+                                <td>60 min</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Dec 18</td>
+                                <td>Group Class</td>
+                                <td>HIIT Bootcamp</td>
+                                <td>45 min</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Dec 17</td>
+                                <td>Personal Training</td>
+                                <td>Sarah Williams</td>
+                                <td>60 min</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Dec 15</td>
+                                <td>Group Class</td>
+                                <td>Power Yoga</td>
+                                <td>60 min</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Bookings Tab -->
+            <div id="bookings" class="tab-content">
+                <h2 style="color: var(--secondary-color); margin-bottom: 30px;">My Bookings</h2>
+                <div class="bookings-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Type</th>
+                                <th>Trainer/Class</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTable">
+                            <tr>
+                                <td>Dec 25</td>
+                                <td>10:00 AM</td>
+                                <td>Personal Training</td>
+                                <td>David Martinez</td>
+                                <td><span class="status-badge status-confirmed">Confirmed</span></td>
+                                <td><button class="action-btn">Reschedule</button></td>
+                            </tr>
+                            <tr>
+                                <td>Dec 27</td>
+                                <td>06:00 PM</td>
+                                <td>Group Class</td>
+                                <td>Power Yoga</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td><button class="action-btn cancel">Cancel</button></td>
+                            </tr>
+                            <tr>
+                                <td>Dec 30</td>
+                                <td>07:00 AM</td>
+                                <td>Group Class</td>
+                                <td>HIIT Bootcamp</td>
+                                <td><span class="status-badge status-confirmed">Confirmed</span></td>
+                                <td><button class="action-btn">Reschedule</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="trainers.html" style="display: inline-block; padding: 12px 30px; background: var(--primary-color); color: white; border-radius: 8px; text-decoration: none; font-weight: 600; transition: var(--transition);" onmouseover="this.style.background='#e55a2a'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='var(--primary-color)'; this.style.transform='none';">Book New Session</a>
+                </div>
+            </div>
+
+            <!-- Progress Tab -->
+            <div id="progress" class="tab-content">
+                <h2 style="color: var(--secondary-color); margin-bottom: 30px;">Fitness Progress</h2>
+                
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <h4>Weight Loss Goal</h4>
+                        <span>65/80 lbs</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 81%"></div>
+                    </div>
+                    <p style="margin: 0; color: var(--text-secondary); font-size: 12px;">15 lbs to goal!</p>
+                </div>
+
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <h4>Muscle Gain Goal</h4>
+                        <span>12/20 lbs</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%"></div>
+                    </div>
+                    <p style="margin: 0; color: var(--text-secondary); font-size: 12px;">8 lbs to goal!</p>
+                </div>
+
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <h4>Workout Consistency</h4>
+                        <span>24/30 sessions</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 80%"></div>
+                    </div>
+                    <p style="margin: 0; color: #666; font-size: 12px;">Great consistency this month!</p>
+                </div>
+
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <h4>Flexibility Goal</h4>
+                        <span>45/60 degrees</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                    <p style="margin: 0; color: #666; font-size: 12px;">Keep up with yoga classes!</p>
+                </div>
+            </div>
+
+            <!-- Profile Tab -->
+            <div id="profile" class="tab-content">
+                <h2 style="color: var(--secondary-color); margin-bottom: 30px;">My Profile</h2>
+                <form class="profile-form" id="profileForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" value="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" value="john.doe@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" value="+1 (555) 123-4567" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <input type="date" value="1990-05-15">
+                    </div>
+                    <div class="form-group">
+                        <label>Fitness Goal</label>
+                        <select>
+                            <option>Weight Loss</option>
+                            <option selected>Muscle Gain</option>
+                            <option>General Fitness</option>
+                            <option>Endurance</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Experience Level</label>
+                        <select>
+                            <option>Beginner</option>
+                            <option selected>Intermediate</option>
+                            <option>Advanced</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">Update Profile</button>
+                </form>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings" class="tab-content">
+                <h2 style="color: var(--secondary-color); margin-bottom: 30px;">Settings</h2>
+                <div class="profile-form" style="max-width: 100%;">
+                    <h3 style="margin-top: 0; margin-bottom: 20px; color: var(--text-primary);">Notification Preferences</h3>
+                    
+                    <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color);">
+                        <label style="display: flex; align-items: center; gap: 10px; margin: 0; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" checked>
+                            <span>Email reminders for bookings</span>
+                        </label>
+                    </div>
+
+                    <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color);">
+                        <label style="display: flex; align-items: center; gap: 10px; margin: 0; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" checked>
+                            <span>SMS notifications for class updates</span>
+                        </label>
+                    </div>
+
+                    <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color);">
+                        <label style="display: flex; align-items: center; gap: 10px; margin: 0; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox">
+                            <span>Newsletter subscription</span>
+                        </label>
+                    </div>
+
+                    <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color);">
+                        <label style="display: flex; align-items: center; gap: 10px; margin: 0; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" checked>
+                            <span>Progress milestone notifications</span>
+                        </label>
+                    </div>
+
+                    <h3 style="margin: 30px 0 20px 0; color: var(--text-primary);">Account</h3>
+
+                    <div style="display: grid; gap: 10px;">
+                        <button type="button" class="submit-btn" style="background: var(--secondary-color);">Change Password</button>
+                        <button type="button" class="submit-btn" style="background: var(--danger-color);">Delete Account</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Tab switching function
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Remove active class from all sidebar links
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.closest('a').classList.add('active');
+        }
+
+        // Display current date
+        function updateDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date().toLocaleDateString('en-US', options);
+            document.getElementById('greetingDate').textContent = today;
+        }
+
+        // Form submission (update profile via API)
+        document.getElementById('profileForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const name = form.querySelector('input[type="text"]').value.trim();
+            const phone = form.querySelector('input[type="tel"]').value.trim();
+
+            try {
+                const res = await fetch('/api/profile', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ name, phone })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert('Profile updated successfully!');
+                    // update sidebar and localStorage
+                    document.getElementById('sidebarName').textContent = data.data.name || '';
+                    const stored = JSON.parse(localStorage.getItem('fz_user') || '{}');
+                    stored.name = data.data.name;
+                    localStorage.setItem('fz_user', JSON.stringify(stored));
+                } else {
+                    alert('Update failed: ' + (data.error || 'Unknown'));
+                }
+            } catch (err) {
+                alert('Network error: ' + err.message);
+            }
+        });
+
+        // Initialize and auth check
+        window.addEventListener('load', () => {
+            updateDate();
+            checkAuth();
+        });
+
+        async function checkAuth() {
+            try {
+                const res = await fetch('/api/profile', { credentials: 'include' });
+                const data = await res.json();
+                if (!data.success) {
+                    // not logged in
+                    localStorage.removeItem('fz_user');
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                const user = data.data;
+                // populate ui
+                document.getElementById('sidebarName').textContent = user.name || '';
+                document.getElementById('sidebarPlan').textContent = user.plan || '';
+                // populate profile form fields
+                const profileForm = document.getElementById('profileForm');
+                if (profileForm) {
+                    profileForm.querySelector('input[type="text"]').value = user.name || '';
+                    const emailInput = profileForm.querySelector('input[type="email"]');
+                    if (emailInput) emailInput.value = user.email || '';
+                    const phoneInput = profileForm.querySelector('input[type="tel"]');
+                    if (phoneInput) phoneInput.value = user.phone || '';
+                }
+
+                // set localStorage for quick access
+                localStorage.setItem('fz_user', JSON.stringify({ id: user.id, name: user.name, email: user.email }));
+
+                // set up logout button
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) logoutBtn.addEventListener('click', logout);
+
+            } catch (err) {
+                localStorage.removeItem('fz_user');
+                window.location.href = 'login.html';
+            }
+        }
+
+        async function logout() {
+            try {
+                await fetch('/api/logout', { method: 'POST', credentials: 'include' });
+            } catch (e) {
+                // ignore
+            }
+            localStorage.removeItem('fz_user');
+            window.location.href = 'login.html';
+        }
+
+        // Mobile sidebar toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.dashboard-sidebar');
+        
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+        }
+    </script>
+</body>
+</html>

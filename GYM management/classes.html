@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classes - FitZone</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .classes-section {
+            padding: 80px 20px;
+            background: #f8f9fa;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #004e89;
+            background: white;
+            color: #004e89;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #ff6b35;
+            color: white;
+            border-color: #ff6b35;
+        }
+
+        .filter-btn:hover {
+            background: #004e89;
+            color: white;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .class-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .class-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .class-header {
+            background: linear-gradient(135deg, #ff6b35, #ff9a5a);
+            color: white;
+            padding: 20px;
+        }
+
+        .class-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .class-trainer {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .class-body {
+            padding: 20px;
+        }
+
+        .class-detail {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: #666;
+        }
+
+        .class-detail i {
+            color: #ff6b35;
+            width: 20px;
+        }
+
+        .class-capacity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .capacity-bar {
+            flex: 1;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .capacity-fill {
+            height: 100%;
+            background: #ff6b35;
+            transition: width 0.3s ease;
+        }
+
+        .capacity-text {
+            font-size: 12px;
+            color: #999;
+            white-space: nowrap;
+        }
+
+        .class-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .class-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-register {
+            flex: 1;
+            padding: 10px;
+            background: #ff6b35;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-register:hover {
+            background: #e55a2a;
+        }
+
+        .btn-register.full {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .calendar-view {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-header button {
+            padding: 8px 16px;
+            background: #004e89;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .week-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .day-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .day-card:hover,
+        .day-card.active {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .day-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .day-date {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .week-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .schedule-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-dumbbell"></i> FitZone
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+                <li><a href="index.html#services" class="nav-link">Services</a></li>
+                <li><a href="trainers.html" class="nav-link">Trainers</a></li>
+                <li><a href="classes.html" class="nav-link">Classes</a></li>
+                <li><a href="index.html#membership" class="nav-link">Membership</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Classes Section -->
+    <section class="classes-section">
+        <div class="container">
+            <h2>Class Schedule</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">
+                Choose from our variety of classes and find the perfect fit for your fitness goals
+            </p>
+
+            <!-- Calendar View -->
+            <div class="calendar-view" style="margin-bottom: 40px;">
+                <div class="calendar-header">
+                    <h3>Select Week</h3>
+                    <div>
+                        <button onclick="previousWeek()">← Previous</button>
+                        <button onclick="nextWeek()" style="margin-left: 10px;">Next →</button>
+                    </div>
+                </div>
+                <div class="week-grid" id="weekGrid"></div>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterClasses('all')">All Classes</button>
+                <button class="filter-btn" onclick="filterClasses('yoga')">Yoga</button>
+                <button class="filter-btn" onclick="filterClasses('hiit')">HIIT</button>
+                <button class="filter-btn" onclick="filterClasses('spinning')">Spinning</button>
+                <button class="filter-btn" onclick="filterClasses('zumba')">Zumba</button>
+                <button class="filter-btn" onclick="filterClasses('pilates')">Pilates</button>
+            </div>
+
+            <!-- Classes Grid -->
+            <div class="schedule-grid" id="classesGrid"></div>
+        </div>
+    </section>
+
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Register for Class</h2>
+                <span class="close" onclick="closeRegistration()">&times;</span>
+            </div>
+            <form id="registrationForm" onsubmit="submitRegistration(event)">
+                <input type="hidden" id="classId">
+                
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Email</label>
+                    <input type="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Experience Level</label>
+                    <select required>
+                        <option value="">Select Level</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn">Register for Class</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        let currentWeekOffset = 0;
+        let selectedDate = null;
+        let currentFilter = 'all';
+
+        const classes = [
+            {
+                id: 1,
+                name: "Power Yoga",
+                type: "yoga",
+                trainer: "Sarah Williams",
+                time: "06:00 AM",
+                duration: "60 min",
+                description: "Dynamic flow yoga session to build strength and flexibility",
+                capacity: 20,
+                enrolled: 15,
+                days: ["Monday", "Wednesday", "Friday"]
+            },
+            {
+                id: 2,
+                name: "HIIT Bootcamp",
+                type: "hiit",
+                trainer: "Mike Chen",
+                time: "07:00 AM",
+                duration: "45 min",
+                description: "High-intensity interval training for maximum calorie burn",
+                capacity: 25,
+                enrolled: 20,
+                days: ["Tuesday", "Thursday", "Saturday"]
+            },
+            {
+                id: 3,
+                name: "Spin & Burn",
+                type: "spinning",
+                trainer: "David Martinez",
+                time: "05:30 AM",
+                duration: "50 min",
+                description: "Indoor cycling class with motivating music and challenging climbs",
+                capacity: 30,
+                enrolled: 28,
+                days: ["Monday", "Wednesday", "Friday"]
+            },
+            {
+                id: 4,
+                name: "Zumba Party",
+                type: "zumba",
+                trainer: "Jessica Lee",
+                time: "06:30 PM",
+                duration: "60 min",
+                description: "Fun Latin dance fitness that doesn't feel like a workout",
+                capacity: 40,
+                enrolled: 35,
+                days: ["Tuesday", "Thursday", "Saturday"]
+            },
+            {
+                id: 5,
+                name: "Pilates Core",
+                type: "pilates",
+                trainer: "Emma Davis",
+                time: "10:00 AM",
+                duration: "50 min",
+                description: "Focus on core strength and body alignment with pilates",
+                capacity: 20,
+                enrolled: 18,
+                days: ["Monday", "Wednesday", "Friday"]
+            },
+            {
+                id: 6,
+                name: "Relaxing Yoga",
+                type: "yoga",
+                trainer: "Sarah Williams",
+                time: "07:00 PM",
+                duration: "60 min",
+                description: "Gentle yoga for stress relief and better sleep",
+                capacity: 25,
+                enrolled: 12,
+                days: ["Tuesday", "Thursday"]
+            }
+        ];
+
+        function getWeekDays(offset) {
+            const now = new Date();
+            now.setDate(now.getDate() + (offset * 7));
+            const start = new Date(now);
+            start.setDate(start.getDate() - start.getDay());
+            
+            const days = [];
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(start);
+                date.setDate(date.getDate() + i);
+                days.push({
+                    name: date.toLocaleDateString('en-US', { weekday: 'short' }),
+                    date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                    fullDate: date
+                });
+            }
+            return days;
+        }
+
+        function renderWeekGrid() {
+            const days = getWeekDays(currentWeekOffset);
+            const grid = document.getElementById('weekGrid');
+            grid.innerHTML = days.map((day, i) => `
+                <div class="day-card ${i === 0 ? 'active' : ''}" onclick="selectDay(this)">
+                    <div class="day-name">${day.name}</div>
+                    <div class="day-date">${day.date}</div>
+                </div>
+            `).join('');
+        }
+
+        function previousWeek() {
+            currentWeekOffset--;
+            renderWeekGrid();
+        }
+
+        function nextWeek() {
+            currentWeekOffset++;
+            renderWeekGrid();
+        }
+
+        function selectDay(element) {
+            document.querySelectorAll('.day-card').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        function filterClasses(type) {
+            currentFilter = type;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderClasses();
+        }
+
+        function renderClasses() {
+            const grid = document.getElementById('classesGrid');
+            const filtered = currentFilter === 'all' ? classes : classes.filter(c => c.type === currentFilter);
+            
+            grid.innerHTML = filtered.map(cls => {
+                const isFull = cls.enrolled >= cls.capacity;
+                return `
+                    <div class="class-card">
+                        <div class="class-header">
+                            <div class="class-name">${cls.name}</div>
+                            <div class="class-trainer">by ${cls.trainer}</div>
+                        </div>
+                        <div class="class-body">
+                            <div class="class-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>${cls.time} - ${cls.duration}</span>
+                            </div>
+                            <div class="class-detail">
+                                <i class="fas fa-calendar"></i>
+                                <span>${cls.days.join(', ')}</span>
+                            </div>
+                            <div class="class-capacity">
+                                <div class="capacity-bar">
+                                    <div class="capacity-fill" style="width: ${(cls.enrolled/cls.capacity)*100}%"></div>
+                                </div>
+                                <div class="capacity-text">${cls.enrolled}/${cls.capacity}</div>
+                            </div>
+                            <p class="class-description">${cls.description}</p>
+                            <div class="class-actions">
+                                <button class="btn-register ${isFull ? 'full' : ''}" 
+                                    onclick="openRegistration(${cls.id})"
+                                    ${isFull ? 'disabled' : ''}>
+                                    ${isFull ? 'Class Full' : 'Register Now'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openRegistration(classId) {
+            document.getElementById('classId').value = classId;
+            document.getElementById('registrationModal').classList.add('active');
+        }
+
+        function closeRegistration() {
+            document.getElementById('registrationModal').classList.remove('active');
+        }
+
+        function submitRegistration(e) {
+            e.preventDefault();
+            const form = e.target;
+            const classId = document.getElementById('classId').value;
+            const name = form.querySelector('input[type="text"]').value;
+            const email = form.querySelector('input[type="email"]').value;
+            
+            fetch('/api/class-registration', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ classId, name, email })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Successfully registered for class! Check your email.');
+                    closeRegistration();
+                    form.reset();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            });
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('registrationModal');
+            if (event.target === modal) {
+                closeRegistration();
+            }
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            renderWeekGrid();
+            renderClasses();
+        });
+    </script>
+</body>
+</html>

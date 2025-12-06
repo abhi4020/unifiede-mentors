@@ -1,0 +1,35 @@
+<%- include('partials/header', { title: 'Contact' }) %>
+
+<section class="hero">
+  <h2>Contact Us</h2>
+  <p class="muted">Have a question or feedback? Send us a message and we'll get back to you.</p>
+</section>
+
+<section class="card" style="max-width:720px;margin:1rem auto;padding:1.25rem">
+  <% if (typeof success !== 'undefined' && success) { %>
+    <div class="card" style="border-left:4px solid #16a34a;padding:.6rem;margin-bottom:.8rem;color:inherit">
+      <strong>Thanks!</strong>
+      <p class="muted"><%= success %></p>
+    </div>
+  <% } %>
+
+  <form method="post" action="/contact">
+    <div class="form-row">
+      <label class="muted">Name</label>
+      <div class="input-icon"><input name="name" required placeholder="Your name" /></div>
+    </div>
+    <div class="form-row">
+      <label class="muted">Email</label>
+      <div class="input-icon"><input name="email" type="email" required placeholder="you@example.com" /></div>
+    </div>
+    <div class="form-row">
+      <label class="muted">Message</label>
+      <div><textarea name="message" required placeholder="How can we help?"></textarea></div>
+    </div>
+    <div class="auth-cta">
+      <button class="btn" type="submit">Send message</button>
+    </div>
+  </form>
+</section>
+
+<%- include('partials/footer') %>

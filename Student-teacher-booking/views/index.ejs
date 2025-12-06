@@ -1,0 +1,45 @@
+<%- include('partials/header', { title: 'Teachers' }) %>
+
+  <section class="hero">
+    <h2>Find and book sessions with expert teachers</h2>
+    <p class="muted">Browse teachers by subject and book a session in a few clicks.</p>
+  </section>
+  <section style="margin-top:1rem">
+    <div style="display:flex;gap:1rem;align-items:center;margin-bottom:1rem">
+      <label for="teacher-search" class="sr-only">Search teachers or subjects</label>
+      <input id="teacher-search" aria-label="Search teachers or subjects" placeholder="Search teachers or subjects..." style="flex:1;padding:.6rem;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit" />
+      <label for="subject-filter" class="sr-only">Filter by subject</label>
+      <select id="subject-filter" aria-label="Filter by subject" style="padding:.6rem;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit">
+        <option value="">All subjects</option>
+        <% const seen = {}; teachers.forEach(function(t){ if(!seen[t.subject]){ seen[t.subject]=true; %>
+          <option value="<%= t.subject %>"><%= t.subject %></option>
+        <% } }) %>
+      </select>
+    </div>
+
+    <div style="position:relative">
+      <div id="no-results" class="muted" style="display:none;margin-bottom:1rem">No teachers found.</div>
+      <div class="cards">
+      <% teachers.forEach(function(t){ %>
+        <article class="card teacher-card" data-subject="<%= t.subject %>" data-name="<%= t.name %>">
+          <div class="teacher-top">
+            <div class="avatar" aria-hidden="true"><%= (t.name.split(' ').map(n=>n[0]).join('').slice(0,2)).toUpperCase() %></div>
+            <div class="teacher-meta">
+              <h3 class="teacher-name"><a href="/teacher/<%= t.id %>"><%= t.name %></a></h3>
+              <div style="display:flex;gap:.5rem;align-items:center;margin-top:.25rem">
+                <div class="subject-badge"><%= t.subject %></div>
+                <div class="muted" style="font-size:.85rem">⭐ <span style="font-weight:700">4.8</span></div>
+              </div>
+            </div>
+          </div>
+          <p class="teacher-bio"><%= t.bio %></p>
+          <div class="teacher-actions">
+            <a href="/teacher/<%= t.id %>" class="btn">View & Book</a>
+            <a href="/teacher/<%= t.id %>" class="btn secondary">Message</a>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+  </section>
+
+<%- include('partials/footer') %>

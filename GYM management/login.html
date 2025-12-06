@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - FitZone</title>
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h1>Sign in to FitZone</h1>
+        <p>Access your dashboard, bookings, and fitness progress</p>
+      </div>
+
+      <div id="messageContainer"></div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required />
+        </div>
+
+        <button type="submit" class="auth-submit" id="submitBtn">Sign in</button>
+      </form>
+
+      <div class="auth-footer">
+        <p>Don't have an account? <a href="register.html">Create one now</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // If already logged in (server cookie), redirect
+    (async function(){
+      try{
+        const r = await fetch('/api/profile', { credentials: 'include' });
+        const d = await r.json();
+        if (d && d.success) window.location.href = 'dashboard.html';
+      }catch(e){}
+    })();
+
+    function showMessage(text, type) {
+      const container = document.getElementById('messageContainer');
+      container.innerHTML = `<div class="auth-message ${type}">${text}</div>`;
+      if (type === 'error') setTimeout(() => container.innerHTML = '', 5000);
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('submitBtn');
+
+      if (!email || !password) {
+        showMessage('Please fill in all fields', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.classList.add('loading');
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (data.success) {
+          localStorage.setItem('fz_user', JSON.stringify({ id: data.user.id, name: data.user.name, email: data.user.email }));
+          showMessage('Login successful! Redirecting...', 'success');
+          setTimeout(() => window.location.href = 'dashboard.html', 500);
+        } else {
+          showMessage('Login failed: ' + (data.error || 'Invalid credentials'), 'error');
+          btn.disabled = false;
+          btn.classList.remove('loading');
+        }
+      } catch (err) {
+        showMessage('Network error: ' + err.message, 'error');
+        btn.disabled = false;
+        btn.classList.remove('loading');
+      }
+    });
+  </script>
+</body>
+</html>

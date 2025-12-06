@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-clock"></i> Countdown Timer</h1>
+            <p class="subtitle">Set a target date and time to count down to</p>
+        </header>
+        
+        <section class="input-section">
+            <div class="input-group">
+                <label for="target-date"><i class="fas fa-calendar-alt"></i> Select Target Date & Time</label>
+                <input type="datetime-local" id="target-date">
+            </div>
+            <button id="start-btn">
+                <i class="fas fa-play"></i> Start Countdown
+            </button>
+        </section>
+        
+        <div class="timer-display">
+            <div class="time-unit">
+                <div class="time-value" id="days">00</div>
+                <div class="time-label">Days</div>
+            </div>
+            <div class="time-unit">
+                <div class="time-value" id="hours">00</div>
+                <div class="time-label">Hours</div>
+            </div>
+            <div class="time-unit">
+                <div class="time-value" id="minutes">00</div>
+                <div class="time-label">Minutes</div>
+            </div>
+            <div class="time-unit">
+                <div class="time-value" id="seconds">00</div>
+                <div class="time-label">Seconds</div>
+            </div>
+        </div>
+        
+        <div class="message" id="message">
+            <i class="fas fa-check-circle"></i> Countdown Completed!
+        </div>
+    </div>
+    
+    <footer>
+        <p>Countdown Timer Project | HTML, CSS, JavaScript</p>
+    </footer>
+
+    
+</body>
+</html>

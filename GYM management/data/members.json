@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1764420000000,
+    "name": "John Doe",
+    "email": "john@example.com",
+    "phone": "+1-555-0101",
+    "plan": "Premium",
+    "status": "active",
+    "registeredDate": "2025-11-01T10:00:00.000Z"
+  },
+  {
+    "id": 1764420100000,
+    "name": "Sarah Smith",
+    "email": "sarah@example.com",
+    "phone": "+1-555-0102",
+    "plan": "Elite",
+    "status": "active",
+    "registeredDate": "2025-11-05T14:30:00.000Z"
+  },
+  {
+    "id": 1764420200000,
+    "name": "Mike Johnson",
+    "email": "mike@example.com",
+    "phone": "+1-555-0103",
+    "plan": "Basic",
+    "status": "pending",
+    "registeredDate": "2025-11-20T09:15:00.000Z"
+  },
+  {
+    "id": 1764420300000,
+    "name": "Emma Wilson",
+    "email": "emma@example.com",
+    "phone": "+1-555-0104",
+    "plan": "Premium",
+    "status": "active",
+    "registeredDate": "2025-11-10T16:45:00.000Z"
+  }
+]

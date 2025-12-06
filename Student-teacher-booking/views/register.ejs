@@ -1,0 +1,49 @@
+<%- include('partials/header', { title: 'Register' }) %>
+
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-illustration">
+      <h3>Create your account</h3>
+      <p class="muted">Join our community of students and teachers. Manage bookings and communicate easily.</p>
+      <img src="./img/register.svg" alt="signup" style="max-width:100%;opacity:.95;border-radius:8px"/>
+    </div>
+    <div class="auth-form">
+      <h2 class="auth-title">Register</h2>
+      <p class="auth-sub">Create a new account</p>
+
+      <form method="post" action="/register">
+        <div class="form-row">
+          <label class="muted">Full name</label>
+          <div class="input-icon"><input name="name" required placeholder="Your full name" /></div>
+        </div>
+
+        <div class="form-row">
+          <label class="muted">Username (email)</label>
+          <div class="input-icon"><input name="username" type="email" required placeholder="you@example.com" /></div>
+        </div>
+
+        <div class="form-row">
+          <label class="muted">Password</label>
+          <div class="input-icon"><input name="password" type="password" required placeholder="Choose a password" /></div>
+        </div>
+
+        <div class="form-row">
+          <label class="muted">Role</label>
+          <div class="input-icon">
+            <select name="role">
+              <option value="student">Student</option>
+              <option value="teacher">Teacher</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="auth-cta">
+          <button class="btn" type="submit">Create account</button>
+          <a class="btn secondary" href="/login">Sign in</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

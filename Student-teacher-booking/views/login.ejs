@@ -1,0 +1,41 @@
+<%- include('partials/header', { title: 'Login' }) %>
+
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-illustration">
+      <h3>Welcome back</h3>
+      <p class="muted">Sign in to manage your bookings, view accepted appointments, and chat with teachers.</p>
+  <img src="/img/login.png" alt="illustration" style="max-width:100%;opacity:.95;border-radius:8px"/>
+    </div>
+    <div class="auth-form">
+      <h2 class="auth-title">Login</h2>
+      <p class="auth-sub">Use your account to continue</p>
+
+      <!-- Social login removed per request -->
+
+      <form method="post" action="/login">
+        <div class="form-row">
+          <label class="muted">Username (email)</label>
+          <div class="input-icon"><input name="username" type="email" required placeholder="you@example.com" /></div>
+        </div>
+
+        <div class="form-row">
+          <label class="muted">Password</label>
+          <div class="input-icon"><input name="password" type="password" required placeholder="Your password" /></div>
+        </div>
+
+        <div class="helper-row">
+          <label style="display:flex;align-items:center;gap:.4rem"><input type="checkbox" name="remember"/> Remember me</label>
+          <a href="/forgot">Forgot?</a>
+        </div>
+
+        <div class="auth-cta">
+          <button class="btn" type="submit">Sign in</button>
+          <a class="btn secondary" href="/register">Create account</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

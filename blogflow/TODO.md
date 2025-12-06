@@ -1,4 +1,5 @@
-- [x] Edit src/app/actions.ts to add await before cookies().set and cookies().delete
-- [x] Edit src/app/blog/[slug]/page.tsx to make component async and add await before cookies()
-- [x] Edit src/components/layout/header.tsx to make component async and add await before cookies()
-- [x] Run npm run typecheck to verify no errors
+# TODO: Run Blog Website
+
+- [x] Navigate to blogflow directory
+- [x] Install project dependencies using npm install
+- [x] Start the development server using npm run dev

@@ -1,0 +1,108 @@
+<%- include('partials/header', { title: teacher.name }) %>
+
+  <section class="teacher-hero card">
+    <div class="teacher-top-hero">
+      <div class="avatar avatar-lg" aria-hidden="true"><%= (teacher.name.split(' ').map(n=>n[0]).join('').slice(0,2)).toUpperCase() %></div>
+      <div class="teacher-hero-meta">
+        <h2 class="teacher-title"><%= teacher.name %></h2>
+        <div class="muted"><strong><%= teacher.subject %></strong></div>
+        <div class="teacher-bio" style="margin-top:.5rem"><%= teacher.bio %></div>
+      </div>
+      <div class="teacher-hero-actions">
+        <a href="#book-form" class="btn">Book a session</a>
+        <a href="#" class="btn secondary">Message</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="layout-2cols" style="margin-top:1rem">
+    <section>
+      <h3>Existing bookings</h3>
+      <% if (bookings.length === 0) { %>
+        <p class="muted">No bookings yet.</p>
+      <% } else { %>
+        <ul class="bookings-list">
+          <% bookings.forEach(function(b){ %>
+            <li class="booking-item card">
+              <div class="booking-main">
+                <div>
+                  <strong><%= b.student_user_name || b.student_name || 'Student' %></strong>
+                  <div class="muted" style="font-size:.95rem"><span data-time="<%= b.time %>"><%= b.time %></span></div>
+                </div>
+                <div class="booking-actions">
+                  <span class="status-pill" data-status="<%= b.status %>"><%= b.status %></span>
+                  <% if (locals.currentUser && locals.currentUser.role === 'teacher') { %>
+                    <form method="post" action="/booking/<%= b.id %>/accept" style="display:inline">
+                      <button class="btn" type="submit">Accept</button>
+                    </form>
+                    <form method="post" action="/booking/<%= b.id %>/reject" style="display:inline;margin-left:.5rem">
+                      <button class="btn secondary" type="submit">Reject</button>
+                    </form>
+                  <% } %>
+                </div>
+              </div>
+            </li>
+          <% }) %>
+        </ul>
+      <% } %>
+    </section>
+
+    <aside id="book-form" class="card book-form">
+      <h3>Book a session</h3>
+      <% if (locals.currentUser && locals.currentUser.role === 'student') { %>
+        <form method="post" action="/book">
+          <input type="hidden" name="teacher_id" value="<%= teacher.id %>" />
+          <div class="field">
+            <label>Time</label>
+            <input name="time" type="datetime-local" required />
+          </div>
+          <div class="field">
+            <label>Duration</label>
+            <select name="duration_minutes">
+              <option value="30">30 minutes</option>
+              <option value="60" selected>60 minutes</option>
+              <option value="90">90 minutes</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Notes (optional)</label>
+            <textarea name="notes" placeholder="Anything the teacher should know..."></textarea>
+          </div>
+          <div class="auth-cta" style="margin-top:0">
+            <button class="btn" type="submit">Book session</button>
+          </div>
+        </form>
+      <% } else { %>
+        <p class="muted">You must be logged in as a student to book an appointment.</p>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <a href="/login" class="btn">Login</a>
+          <a href="/register" class="btn secondary">Register</a>
+        </div>
+      <% } %>
+    </aside>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="card" style="margin-top:1rem;border-left:4px solid #ff6666">
+        <strong style="color:#b91c1c">Error:</strong>
+        <p class="muted"><%= error %></p>
+      </div>
+    <% } %>
+
+    <% if (typeof confirmation !== 'undefined' && confirmation) { %>
+      <!-- Modal -->
+      <div id="booking-confirmation-modal" class="modal-overlay">
+          <div class="modal-dialog card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <button type="button" class="close-modal" aria-label="Close">✕</button>
+            <h3 id="modal-title">Booking confirmed</h3>
+          <p>Your booking with <strong><%= confirmation.teacher_name || teacher.name %></strong> is <strong><%= confirmation.status %></strong>.</p>
+          <p>Time: <span data-time="<%= confirmation.time %>"><%= confirmation.time %></span></p>
+          <p>Student: <strong><%= confirmation.student_name %></strong></p>
+          <div style="margin-top:1rem">
+            <a href="/bookings" class="btn">View bookings</a>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+<%- include('partials/footer') %>

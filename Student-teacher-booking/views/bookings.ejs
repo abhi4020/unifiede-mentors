@@ -1,0 +1,21 @@
+<%- include('partials/header', { title: 'Bookings' }) %>
+
+  <h2>All Bookings</h2>
+  <div class="card">
+    <% if (bookings.length === 0) { %>
+      <p class="muted">No bookings yet.</p>
+    <% } else { %>
+      <ul class="bookings-list">
+        <% bookings.forEach(function(b){ %>
+          <li>
+            <div>
+              <strong><%= b.student_name %></strong> with <%= b.teacher_name %> (<span class="muted"><%= b.teacher_subject %></span>)
+            </div>
+            <div class="meta"><span data-time="<%= b.time %>"><%= b.time %></span></div>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </div>
+
+<%- include('partials/footer') %>
