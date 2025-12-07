@@ -206,8 +206,9 @@ li a:hover::before{
  }
 
 .btn:hover{
+    /* border: 2px solid white; */
     background-color: var(--btn-hover);
-    color: var(--text);
+    color: white;
  }
 
  .socials{
@@ -339,7 +340,7 @@ background-color: var(--bg);
 .project-card:hover{
     transform: translateY(-10px) scale(1.02);
     background-color: var(--card-hover);
-    color: var(--text);
+    color: #ab9797;
 }
 
 .project-card img{
@@ -348,14 +349,14 @@ background-color: var(--bg);
 }
 
 .project-card:hover .btn{
-border: 2px solid var(--text);
-color: var(--text);
+border: 2px solid deepskyblue;
+color: white;
 }
 
 .project-card:hover .btn:hover{
-    border: 2px solid var(--text);
-    background-color: var(--text);
-    color: var(--bg);
+    border: 2px solid deepskyblue;
+    background-color:midnightblue;
+    color: white;
 }
 
 .project-card h3{
