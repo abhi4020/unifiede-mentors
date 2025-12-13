@@ -224,17 +224,78 @@
 
 
   <section id="contact" class="contact">
-    <div class="input-box">
-      <h2 class="section-title">Contact Me</h2>
+    <h2 class="section-title">Contact Me</h2>
 
-      <div class="input">
-        <input type="text" placeholder="Example@gmail.com">
-        <i class="fa-solid fa-envelope"></i>
+    <div class="contact-card">
+      <div class="contact-left">
+        <h3>Let's build something together</h3>
+        <p>Prefer email? Reach me directly at</p>
+        <div class="contact-email">
+          <a id="visible-email" href="mailto:abhi4020@yopmail.com">abhi4020@yopmail.com</a>
+          <button id="copy-email" class="copy-btn" title="Copy email">Copy</button>
+        </div>
+
+        <p>Or send a message using the form — I'll get back to you as soon as possible.</p>
+
+        <div class="contact-socials">
+          <a href="https://github.com/abhi4020" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/abhay-salunkhe-254333292/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
       </div>
 
-      <div class="btn">Submit</div>
+      <div class="contact-right">
+        <form id="contact-form" class="contact-form">
+          <div class="form-row">
+            <div class="field">
+              <i class="fa-solid fa-user field-icon"></i>
+              <input id="contact-name" name="name" type="text" placeholder="Your name" required>
+            </div>
+
+            <div class="field">
+              <i class="fa-solid fa-envelope field-icon"></i>
+              <input id="contact-email" name="email" type="email" placeholder="Your email" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field textarea-field">
+              <i class="fa-solid fa-comment field-icon"></i>
+              <textarea id="contact-message" name="message" placeholder="Your message" rows="6" required></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn primary">Send Message</button>
+            <button type="button" id="send-mailto" class="btn outline">Open Email Client</button>
+            <button type="button" id="emailjs-test" class="btn" style="display:none">Send Test (EmailJS)</button>
+          </div>
+
+          <div class="form-meta">
+            <div id="spinner" class="spinner" aria-hidden="true"></div>
+            <p id="contact-feedback" class="contact-feedback" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
     </div>
+
+    <p class="contact-note">Tip: If you prefer direct delivery from the site, provide EmailJS config in the script and messages will be sent without opening your email client.</p>
+    <p id="emailjs-status" class="contact-note" aria-live="polite">Checking EmailJS configuration...</p>
+    <button id="force-fallback-test" class="btn" style="margin-top:0.5rem">Test Mail Fallback</button>
   </section>
+
+  <!-- Mail fallback modal -->
+  <div id="mailto-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="mailto-modal-title">
+    <div class="modal-content">
+      <h3 id="mailto-modal-title">Open Email Client</h3>
+      <p id="mailto-modal-body">We couldn't open your mail client automatically. You can open it now or copy the message and send manually.</p>
+      <pre id="mailto-modal-message" class="mailto-message"></pre>
+      <div class="modal-actions">
+        <button id="modal-open-mail" class="btn primary">Open Mail Client</button>
+        <button id="modal-copy-message" class="btn outline">Copy Message</button>
+        <button id="modal-close" class="btn">Close</button>
+      </div>
+    </div>
+  </div>
 
 
   <footer>
