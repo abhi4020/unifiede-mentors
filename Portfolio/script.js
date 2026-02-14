@@ -1,9 +1,26 @@
 const menuIcon = document.querySelector('#menu-icon');
 const navLinks = document.querySelector('.nav-links');
+const header = document.querySelector('header');
 
-menuIcon.onclick = () => {
-navLinks.classList.toggle('active');
-}
+// Toggle menu when hamburger is clicked
+menuIcon.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navLinks.classList.toggle('active');
+});
+
+// Close menu when a navigation link is clicked
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+    });
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!header.contains(e.target)) {
+        navLinks.classList.remove('active');
+    }
+});
 
 // Theme toggle (dark / light) with persistence and aria announcement
 const themeToggleBtn = document.querySelector('#theme-toggle');
