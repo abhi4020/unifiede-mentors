@@ -340,18 +340,21 @@ section {
 
 .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 0 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .project-card {
-    padding: 3rem 2rem;
+    padding: 1.5rem 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    gap: 1.5rem;
+    gap: 1rem;
     border: 2px solid var(--card-border);
     background: var(--card-bg);
     border-radius: 3rem;
@@ -367,7 +370,8 @@ section {
 }
 
 .project-card img {
-    width: 30vw;
+    width: 100%;
+    max-width: 200px;
     border-radius: 1rem;
 }
 
@@ -383,7 +387,7 @@ section {
 }
 
 .project-card h3 {
-    font-size: 2rem;
+    font-size: 1.3rem;
     font-weight: 500;
 }
 
